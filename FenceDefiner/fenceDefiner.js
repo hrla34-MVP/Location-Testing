@@ -14,7 +14,23 @@ defineTask();
 
 let defineFences = (areas, taskName = 'notification') => {
 
-  Location.startGeofencingAsync(taskName, areas)
+  let formattedAreas = [];
+
+  areas.forEach((area) => {
+    formattedAreas.push({
+      identifier: area.name,
+      longitude: area.longitude,
+      latitude: area.latitude,
+      radius: area.radius,
+      notifyOnEnter: area.enter,
+      notifyOnExit: area.exit
+    })
+  });
+
+
+
+
+  Location.startGeofencingAsync(taskName, formattedAreas)
   .then(val => console.log(`Registered: ${taskName}`))
   .catch(err => console.log(`Error: ${err}`))
 
